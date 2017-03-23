@@ -1,1 +1,5 @@
 I'm a testfile 0
+
+preferred num 10
+
+LOG_MASTER

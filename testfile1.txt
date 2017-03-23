@@ -1,3 +1,5 @@
 I'm a testfile 1!
 
-This is an edit from master
+preferred num 15
+
+LOG_MASTER
