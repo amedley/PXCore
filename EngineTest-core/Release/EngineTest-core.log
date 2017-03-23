@@ -1,9 +1,0 @@
-﻿  Window.cpp
-  Main.cpp
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Generating code
-  All 15 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Andrew Gundlach\Documents\LearnDatLanguage\EngineTest\Release\vc120.pdb'; linking object as if no debug info
-  EngineTest-core.vcxproj -> C:\Users\Andrew Gundlach\Documents\LearnDatLanguage\EngineTest\Release\EngineTest-core.exe
-  EngineTest-core.vcxproj -> C:\Users\Andrew Gundlach\Documents\LearnDatLanguage\EngineTest\Release\EngineTest-core.pdb (Full PDB)
