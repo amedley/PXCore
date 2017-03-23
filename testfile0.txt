@@ -1,5 +1,8 @@
 I'm a testfile 0
 
-preferred num 10
+preferred num 30
+
+NEW TEXT INBETWEEEEEEN
 
 LOG_MASTER
+LOG_CHANGING_TEST_FILE_0
