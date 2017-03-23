@@ -1,8 +1,0 @@
-I'm a testfile 1!
-
-POSITIVE_EDIT_NOT_FROM_MASTER
-AND ANOTHER POSITIVE EDIT
-
-preferred num 15
-
-LOG_MASTER
