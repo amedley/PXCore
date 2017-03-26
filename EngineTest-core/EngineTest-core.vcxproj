@@ -130,10 +130,20 @@
   <ItemGroup>
     <ClCompile Include="Source\Graphics\Window.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Math\Matrix4.cpp" />
+    <ClCompile Include="Source\Math\Vector2.cpp" />
+    <ClCompile Include="Source\Math\Vector3.cpp" />
+    <ClCompile Include="Source\Math\Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Graphics\Window.h" />
+    <ClInclude Include="Source\Math\Math.h" />
+    <ClInclude Include="Source\Math\Matrix4.h" />
+    <ClInclude Include="Source\Math\Vector2.h" />
+    <ClInclude Include="Source\Math\Vector3.h" />
+    <ClInclude Include="Source\Math\Vector4.h" />
+    <ClInclude Include="Source\Math\Vectors.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
