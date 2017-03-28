@@ -4,16 +4,38 @@ namespace EngineTest
 {
 	namespace Graphics
 	{
-		Window::Window(const char *title, int width, int height)
+		Window* Window::s_Instance = nullptr;
+		void Window::Construct()
 		{
+			if (s_Instance)
+				Assert(false, "s_Instance of Game already exists!");
+			s_Instance = new Window();
+		}
+		void Window::Shutdown()
+		{
+			if (!s_Instance)
+				Assert(false, "s_Instance of Game does not exist!");
+			delete s_Instance;
+		}
+		Window* Window::Get()
+		{
+			if (!s_Instance)
+				Assert(false, "s_Instance of Window does not exist!");
+			return s_Instance;
+		}
+		bool Window::Init(const char* title, int width, int height)
+		{
+			if (m_Initialized)
+			{
+				Assert(false, "Window already initialized!");
+				return false;
+			}
+			m_Initialized = true;
+
 			m_Title = title;
 			m_Width = width;
 			m_Height = height;
-			if (!Init())
-			{
-				glfwTerminate();
-				LOG("Failed to init window!");
-			}
+
 			for (int i = 0; i < MAX_KEYS; i++)
 			{
 				m_KeysDown[i] = false;
@@ -27,10 +49,44 @@ namespace EngineTest
 				m_MouseButtonsReleased[i] = false;
 			}
 			m_MouseX = m_MouseY = 0.0f;
+
+			if (!glfwInit())
+			{
+				Assert(false, "Failed to initialize GLFEW!");
+				return false;
+			}
+			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
+			if (!m_Window)
+			{
+				Assert(false, "There was a problem with glfwCreateWindow!");
+				glfwTerminate();
+				return false;
+			}
+			glfwMakeContextCurrent(m_Window);
+			glfwSetWindowUserPointer(m_Window, this);
+			glfwSetWindowSizeCallback(m_Window, Window::resize_callback);
+			glfwSetKeyCallback(m_Window, Window::key_callback);
+			glfwSetMouseButtonCallback(m_Window, Window::mouse_button_callback);
+			glfwSetCursorPosCallback(m_Window, Window::cursor_position_callback);
+
+			if (glewInit() != GLEW_OK)
+			{
+				Assert(false, "Could not initialize GLEW!");
+				glfwTerminate();
+				return false;
+			}
+			LOG((const char *)glGetString(GL_VERSION));
+
+			return true;
+		}
+		Window::Window()
+		{
+			m_Initialized = false;
 		}
 		Window::~Window()
 		{
 			glfwTerminate();
+			LOG("Window deallocated");
 		}
 
 		void Window::Clear() const
@@ -53,35 +109,6 @@ namespace EngineTest
 			}
 			glfwPollEvents();
 			glfwSwapBuffers(m_Window);
-		}
-		bool Window::Init()
-		{
-			if (!glfwInit())
-			{
-				LOG("Failed to initialize GLFW!");
-				return false;
-			}
-			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
-			if (!m_Window)
-			{
-				LOG("Failed to create GLFW window!");
-				return false;
-			}
-			glfwMakeContextCurrent(m_Window);
-			glfwSetWindowUserPointer(m_Window, this);
-			glfwSetWindowSizeCallback(m_Window, Window::resize_callback);
-			glfwSetKeyCallback(m_Window, Window::key_callback);
-			glfwSetMouseButtonCallback(m_Window, Window::mouse_button_callback);
-			glfwSetCursorPosCallback(m_Window, Window::cursor_position_callback);
-
-			if (glewInit() != GLEW_OK)
-			{
-				LOG("Could not initialize GLEW!");
-				return false;
-			}
-			LOG((const char *) glGetString(GL_VERSION));
-
-			return true;
 		}
 
 		void Window::SetWidth(int width)
@@ -133,6 +160,7 @@ namespace EngineTest
 				return false;
 			return m_MouseButtonsReleased[button];
 		}
+		
 		void Window::resize_callback(GLFWwindow *window, int width, int height)
 		{
 			glViewport(0, 0, width, height);

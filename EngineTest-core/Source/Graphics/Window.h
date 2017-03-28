@@ -16,7 +16,17 @@ namespace EngineTest
 
 		class Window
 		{
+			static Window* s_Instance;
+		public:
+			static void Construct();
+			static void Shutdown();
+			static Window* Get();
+			bool Init(const char* title, int width, int height);
 		private:
+			bool m_Initialized;
+		private:
+			Window();
+			~Window();
 			const char* m_Title;
 			int m_Width, m_Height;
 			GLFWwindow* m_Window;
@@ -29,8 +39,6 @@ namespace EngineTest
 			bool m_MouseButtonsReleased[MAX_MOUSE_BUTTONS];
 			double m_MouseX, m_MouseY;
 		public:
-			Window(const char* title, int width, int height);
-			~Window();
 			void Clear() const;
 			void OnUpdate();
 			bool IsClosed() const;
@@ -49,8 +57,6 @@ namespace EngineTest
 			inline double GetMouseX() const { return m_MouseX; }
 			inline double GetMouseY() const { return m_MouseY; }
 		private:
-			bool Init();
-
 			static void resize_callback(GLFWwindow* window, int width, int height);
 			static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 			static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
