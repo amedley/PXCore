@@ -1,16 +1,15 @@
 #version 330 core
 
-layout (location = 0) in vec4 position;
+layout (location = 0) in vec4 in_position;
+layout (location = 1) in vec4 in_color;
 
 uniform mat4 pr_matrix;
-uniform mat4 vw_matrix = mat4(1.0);
-uniform mat4 ml_matrix = mat4(1.0);
+uniform mat4 ml_matrix;
 
-varying vec3 model_pos;
+varying vec4 out_color;
 
 void main()
 {
-	gl_Position = pr_matrix * vw_matrix * ml_matrix * position;
-
-	model_pos = position.xyz;
+	gl_Position = pr_matrix * ml_matrix * in_position;
+	out_color = in_color;
 }

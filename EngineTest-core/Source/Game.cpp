@@ -55,57 +55,82 @@ namespace EngineTest
 		Window::Get()->Init("EngineTest!", 800, 600);
 		glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 
-
-		GLfloat vertices[] =
-		{
-			-1.0f,	-1.0f,	-0.0f,
-			-1.0f,	+1.0f,	-0.0f,
-			+1.0f,	+1.0f,	-0.0f,
-			+1.0f,	+1.0f,	-0.0f,
-			+1.0f,	-1.0f,	-0.0f,
-			-1.0f,	-1.0f,	-0.0f
-		};
+		
 		GLuint vbo;
 
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, 0);
 		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 7, (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+
+		float vertices[]
+		{
+			-0.5f, -0.5f, +0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			-0.5f, +0.5f, +0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			+0.5f, +0.5f, +0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			+0.5f, +0.5f, +0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			+0.5f, -0.5f, +0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+			-0.5f, -0.5f, +0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 		
 		Shader shader("Resources/Shaders/basic.vert", "Resources/Shaders/basic.frag");
 		shader.Enable();
 
-		//Matrix4 proj = Matrix4::Orthographic(-160.0f, 160.0f, -284.0f, 248.0f, -1.0f, 1.0f);
-		Matrix4 proj = Matrix4::Perspective(75.0, 4.0 / 3.0, -0.1, -100.0);
-
-		Matrix4 view = Matrix4::Identitiy();
-		view *= Matrix4::Translation(Vector3(0.0f, 0.0f, 0.0f));
-		
-		shader.SetUniformMatrix4("pr_matrix", proj);
-		shader.SetUniformMatrix4("vw_matrix", view);
-
-		shader.SetUniform3f("light_pos", Vector3(1.0f, 0.0f, -0.2f));
-
 		float rot = 0.0f;
-		int ticks = 0;
-		float offs = 0.0f;
+
+		float eyeX = 0.0f;
+		float eyeY = 0.0f;
+		float eyeZ = -0.1f;
+		float atX = eyeX;
+		float atY = eyeY;
+		float atZ = eyeZ - 1.0f;
 
 		while (!Window::Get()->IsClosed())
 		{
+			if (Window::Get()->IsKeyDown(GLFW_KEY_W))
+			{
+				eyeZ -= 0.01f;
+				atZ -= 0.01f;
+			}
+			if (Window::Get()->IsKeyDown(GLFW_KEY_A))
+			{
+				eyeX -= 0.01f;
+				atX -= 0.01f;
+			}
+			if (Window::Get()->IsKeyDown(GLFW_KEY_S))
+			{
+				eyeZ += 0.01f;
+				atZ += 0.01f;
+			}
+			if (Window::Get()->IsKeyDown(GLFW_KEY_D))
+			{
+				eyeX += 0.01f;
+				atX += 0.01f;
+			}
+
 			Window::Get()->Clear();
-			ticks++;
-			offs = sinf((float)ticks / 20.0f * (double)M_PI / 180.0f);
-			shader.SetUniform3f("light_pos", Vector3(1.0f, 0.0f, -offs));
 
-			Matrix4 model = Matrix4::Identitiy();
-			model *= Matrix4::Translation(Vector3(0.0f, 0.0f, -5.0f));
-			model *= Matrix4::Rotation(rot, Vector3(1.0f, 0.0f, 0.0f));
-			shader.SetUniformMatrix4("ml_matrix", model);
+			//Matrix4 proj = Matrix4::Orthographic(-8.0, 8.0, -6.0, 6.0, -0.1, -100.0);
+			Matrix4 proj = Matrix4::Perspective(75.0f, 4.0 / 3.0, -0.1, -100.0);
+			Matrix4 transform = Matrix4::Identitiy();
+			transform *= Matrix4::LookAt(Vector3(eyeX, eyeY, eyeZ), Vector3(atX, atY, atZ), Vector3(0.0f, 1.0f, 0.0f));
+			transform *= Matrix4::Translate(Vector3(3.0f, 1.0f, -5.0f));
+			transform *= Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
+			transform *= Matrix4::Rotate(rot, Vector3(1.0f, 1.0f, 1.0f).NormalizeEquals());
 
-			rot += 0.01f;
+			shader.SetUniformMatrix4("pr_matrix", proj);
+			shader.SetUniformMatrix4("ml_matrix", transform);
 
+			
+			rot += 0.03f;
+
+			
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 
 			Window::Get()->OnUpdate();

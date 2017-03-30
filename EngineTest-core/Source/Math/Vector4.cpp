@@ -19,115 +19,140 @@ namespace EngineTest
 			_w = w;
 		}
 
-		Vector4 Vector4::Add(const Vector4& other) const
+		Vector4 Vector4::Add(const Vector4& vector) const
 		{
-			return Vector4(_x + other._x, _y + other._y, _z + other._z, _w + other._w);
+			return Vector4(_x + vector._x, _y + vector._y, _z + vector._z, _w + vector._w);
 		}
-		Vector4 Vector4::Add(const float& other) const
+		Vector4 Vector4::Add(const float& vector) const
 		{
-			return Vector4(_x + other, _y + other, _z + other, _w + other);
+			return Vector4(_x + vector, _y + vector, _z + vector, _w + vector);
 		}
-		Vector4& Vector4::AddEquals(const Vector4& other)
+		Vector4& Vector4::AddEquals(const Vector4& vector)
 		{
-			_x += other._x;
-			_y += other._y;
-			_z += other._z;
-			_w += other._w;
+			_x += vector._x;
+			_y += vector._y;
+			_z += vector._z;
+			_w += vector._w;
 			return *this;
 		}
-		Vector4& Vector4::AddEquals(const float& other)
+		Vector4& Vector4::AddEquals(const float& vector)
 		{
-			_x += other;
-			_y += other;
-			_z += other;
-			_w += other;
-			return *this;
-		}
-
-		Vector4 Vector4::Subtract(const Vector4& other) const
-		{
-			return Vector4(_x - other._x, _y - other._y, _z - other._z, _w - other._w);
-		}
-		Vector4 Vector4::Subtract(const float& other) const
-		{
-			return Vector4(_x - other, _y - other, _z - other, _w - other);
-		}
-		Vector4& Vector4::SubtractEquals(const Vector4& other)
-		{
-			_x -= other._x;
-			_y -= other._y;
-			_z -= other._z;
-			_w -= other._w;
-			return *this;
-		}
-		Vector4& Vector4::SubtractEquals(const float& other)
-		{
-			_x -= other;
-			_y -= other;
-			_z -= other;
-			_w -= other;
+			_x += vector;
+			_y += vector;
+			_z += vector;
+			_w += vector;
 			return *this;
 		}
 
-		Vector4 Vector4::Multiply(const Vector4& other) const
+		Vector4 Vector4::Subtract(const Vector4& vector) const
 		{
-			return Vector4(_x * other._x, _y * other._y, _z * other._z, _w * other._w);
+			return Vector4(_x - vector._x, _y - vector._y, _z - vector._z, _w - vector._w);
 		}
-		Vector4 Vector4::Multiply(const float& other) const
+		Vector4 Vector4::Subtract(const float& vector) const
 		{
-			return Vector4(_x * other, _y * other, _z * other, _w * other);
+			return Vector4(_x - vector, _y - vector, _z - vector, _w - vector);
 		}
-		Vector4& Vector4::MultiplyEquals(const Vector4& other)
+		Vector4& Vector4::SubtractEquals(const Vector4& vector)
 		{
-			_x *= other._x;
-			_y *= other._y;
-			_z *= other._z;
-			_w *= other._w;
+			_x -= vector._x;
+			_y -= vector._y;
+			_z -= vector._z;
+			_w -= vector._w;
 			return *this;
 		}
-		Vector4& Vector4::MultiplyEquals(const float& other)
+		Vector4& Vector4::SubtractEquals(const float& vector)
 		{
-			_x *= other;
-			_y *= other;
-			_z *= other;
-			_w *= other;
-			return *this;
-		}
-
-		Vector4 Vector4::Divide(const Vector4& other) const
-		{
-			return Vector4(_x / other._x, _y / other._y, _z / other._z, _w / other._w);
-		}
-		Vector4 Vector4::Divide(const float& other) const
-		{
-			return Vector4(_x / other, _y / other, _z / other, _w / other);
-		}
-		Vector4& Vector4::DivideEquals(const Vector4& other)
-		{
-			_x /= other._x;
-			_y /= other._y;
-			_z /= other._z;
-			_w /= other._w;
-			return *this;
-		}
-		Vector4& Vector4::DivideEquals(const float& other)
-		{
-			_x /= other;
-			_y /= other;
-			_z /= other;
-			_w /= other;
+			_x -= vector;
+			_y -= vector;
+			_z -= vector;
+			_w -= vector;
 			return *this;
 		}
 
-		bool Vector4::Compare(const Vector4& other) const
+		Vector4 Vector4::Multiply(const Vector4& vector) const
 		{
-			return _x == other._x && _y == other._y && _z == other._z && _w == other._w;
+			return Vector4(_x * vector._x, _y * vector._y, _z * vector._z, _w * vector._w);
 		}
-		bool Vector4::Compare(const float& other) const
+		Vector4 Vector4::Multiply(const float& vector) const
 		{
-			return _x == other && _y == other && _z == other && _w == other;
+			return Vector4(_x * vector, _y * vector, _z * vector, _w * vector);
+		}
+		Vector4& Vector4::MultiplyEquals(const Vector4& vector)
+		{
+			_x *= vector._x;
+			_y *= vector._y;
+			_z *= vector._z;
+			_w *= vector._w;
+			return *this;
+		}
+		Vector4& Vector4::MultiplyEquals(const float& vector)
+		{
+			_x *= vector;
+			_y *= vector;
+			_z *= vector;
+			_w *= vector;
+			return *this;
 		}
 
+		Vector4 Vector4::Divide(const Vector4& vector) const
+		{
+			return Vector4(_x / vector._x, _y / vector._y, _z / vector._z, _w / vector._w);
+		}
+		Vector4 Vector4::Divide(const float& vector) const
+		{
+			return Vector4(_x / vector, _y / vector, _z / vector, _w / vector);
+		}
+		Vector4& Vector4::DivideEquals(const Vector4& vector)
+		{
+			_x /= vector._x;
+			_y /= vector._y;
+			_z /= vector._z;
+			_w /= vector._w;
+			return *this;
+		}
+		Vector4& Vector4::DivideEquals(const float& vector)
+		{
+			_x /= vector;
+			_y /= vector;
+			_z /= vector;
+			_w /= vector;
+			return *this;
+		}
+
+		bool Vector4::Compare(const Vector4& vector) const
+		{
+			return _x == vector._x && _y == vector._y && _z == vector._z && _w == vector._w;
+		}
+		bool Vector4::Compare(const float& vector) const
+		{
+			return _x == vector && _y == vector && _z == vector && _w == vector;
+		}
+
+		Vector4 Vector4::Normalize() const
+		{
+			return Divide(Magnitude());
+		}
+		Vector4& Vector4::NormalizeEquals()
+		{
+			return DivideEquals(Magnitude());
+		}
+
+		float Vector4::Magnitude() const
+		{
+			return sqrtf(_x * _x + _y * _y + _z * _z + _w * _w);
+		}
+		float Vector4::Distance(const Vector4& vector) const
+		{
+			float dx = vector._x - _x;
+			float dy = vector._y - _y;
+			float dz = vector._z - _z;
+			float dw = vector._w - _w;
+			return sqrtf(dx * dx + dy * dy + dz * dz + dw * dw);
+		}
+		float Vector4::Dot(const Vector4& vector) const
+		{
+			return _x * vector._x + _y * vector._y + _z * vector._z + _w * vector._w;
+		}
 
 		Vector4 operator+(const Vector4& left, const Vector4& right)
 		{

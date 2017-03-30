@@ -13,28 +13,35 @@ namespace EngineTest
 			Vector4();
 			Vector4(const float& x, const float& y, const float& z, const float& w);
 
-			Vector4 Add(const Vector4& other) const;
-			Vector4 Add(const float& other) const;
-			Vector4& AddEquals(const Vector4& other);
-			Vector4& AddEquals(const float& other);
+			Vector4 Add(const Vector4& vector) const;
+			Vector4 Add(const float& vector) const;
+			Vector4& AddEquals(const Vector4& vector);
+			Vector4& AddEquals(const float& vector);
 
-			Vector4 Subtract(const Vector4& other) const;
-			Vector4 Subtract(const float& other) const;
-			Vector4& SubtractEquals(const Vector4& other);
-			Vector4& SubtractEquals(const float& other);
+			Vector4 Subtract(const Vector4& vector) const;
+			Vector4 Subtract(const float& vector) const;
+			Vector4& SubtractEquals(const Vector4& vector);
+			Vector4& SubtractEquals(const float& vector);
 
-			Vector4 Multiply(const Vector4& other) const;
-			Vector4 Multiply(const float& other) const;
-			Vector4& MultiplyEquals(const Vector4& other);
-			Vector4& MultiplyEquals(const float& other);
+			Vector4 Multiply(const Vector4& vector) const;
+			Vector4 Multiply(const float& vector) const;
+			Vector4& MultiplyEquals(const Vector4& vector);
+			Vector4& MultiplyEquals(const float& vector);
 
-			Vector4 Divide(const Vector4& other) const;
-			Vector4 Divide(const float& other) const;
-			Vector4& DivideEquals(const Vector4& other);
-			Vector4& DivideEquals(const float& other);
+			Vector4 Divide(const Vector4& vector) const;
+			Vector4 Divide(const float& vector) const;
+			Vector4& DivideEquals(const Vector4& vector);
+			Vector4& DivideEquals(const float& vector);
 
-			bool Compare(const Vector4& other) const;
-			bool Compare(const float& other) const;
+			bool Compare(const Vector4& vector) const;
+			bool Compare(const float& vector) const;
+
+			Vector4 Normalize() const;
+			Vector4& NormalizeEquals();
+
+			float Magnitude() const;
+			float Distance(const Vector4& vector) const;
+			float Dot(const Vector4& vector) const;
 
 			friend Vector4 operator+(const Vector4& left, const Vector4& right);
 			friend Vector4 operator+(const Vector4& left, const float& right);
