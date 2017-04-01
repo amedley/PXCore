@@ -31,6 +31,7 @@ namespace EngineTest
 			inline Vector3 GetPosition() const { return Vector3(GetColumn(3)); }
 			inline void SetPosition(const Vector3& position) { SetColumn(3, Vector4(position, 1.0f)); }
 
+			Matrix4& operator=(const Matrix4& matrix);
 			Matrix4 operator*(const Matrix4& matrix) const;
 			Matrix4& operator*=(const Matrix4& matrix);
 

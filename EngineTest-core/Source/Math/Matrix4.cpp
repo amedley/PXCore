@@ -168,23 +168,34 @@ namespace EngineTest
 			_elements[index + 12] = column._w;
 		}
 
+		Matrix4& Matrix4::operator=(const Matrix4& matrix)
+		{
+			memcpy((void*) _elements, matrix._elements, sizeof(float) * 16);
+			return *this;
+		}
 		Matrix4 Matrix4::operator*(const Matrix4& matrix) const
 		{
 			Matrix4 result;
 			float* src = (float*)&matrix;
 			float* data = (float*)&result;
-			for (int y = 0; y < 4; y++)
-			{
-				for (int x = 0; x < 4; x++)
-				{
-					float sum = 0.0f;
-					for (int e = 0; e < 4; e++)
-					{
-						sum += _elements[x + e * 4] * src[e + y * 4];
-					}
-					data[x + y * 4] = sum;
-				}
-			}
+
+			data[0] = _elements[0] * src[0] + _elements[4] * src[1] + _elements[8] * src[2] + _elements[12] * src[3];
+			data[1] = _elements[1] * src[0] + _elements[5] * src[1] + _elements[9] * src[2] + _elements[13] * src[3];
+			data[2] = _elements[2] * src[0] + _elements[6] * src[1] + _elements[10] * src[2] + _elements[14] * src[3];
+			data[3] = _elements[3] * src[0] + _elements[7] * src[1] + _elements[11] * src[2] + _elements[15] * src[3];
+			data[4] = _elements[0] * src[4] + _elements[4] * src[5] + _elements[8] * src[6] + _elements[12] * src[7];
+			data[5] = _elements[1] * src[4] + _elements[5] * src[5] + _elements[9] * src[6] + _elements[13] * src[7];
+			data[6] = _elements[2] * src[4] + _elements[6] * src[5] + _elements[10] * src[6] + _elements[14] * src[7];
+			data[7] = _elements[3] * src[4] + _elements[7] * src[5] + _elements[11] * src[6] + _elements[15] * src[7];
+			data[8] = _elements[0] * src[8] + _elements[4] * src[9] + _elements[8] * src[10] + _elements[12] * src[11];
+			data[9] = _elements[1] * src[8] + _elements[5] * src[9] + _elements[9] * src[10] + _elements[13] * src[11];
+			data[10] = _elements[2] * src[8] + _elements[6] * src[9] + _elements[10] * src[10] + _elements[14] * src[11];
+			data[11] = _elements[3] * src[8] + _elements[7] * src[9] + _elements[11] * src[10] + _elements[15] * src[11];
+			data[12] = _elements[0] * src[12] + _elements[4] * src[13] + _elements[8] * src[14] + _elements[12] * src[15];
+			data[13] = _elements[1] * src[12] + _elements[5] * src[13] + _elements[9] * src[14] + _elements[13] * src[15];
+			data[14] = _elements[2] * src[12] + _elements[6] * src[13] + _elements[10] * src[14] + _elements[14] * src[15];
+			data[15] = _elements[3] * src[12] + _elements[7] * src[13] + _elements[11] * src[14] + _elements[15] * src[15];
+
 			return result;
 		}
 		Matrix4& Matrix4::operator*=(const Matrix4& matrix)
