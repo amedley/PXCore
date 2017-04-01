@@ -1,41 +1,31 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include "../Debug.h"
+#include "../Common.h"
 
 namespace EngineTest
 {
 	namespace Math
 	{
-		typedef struct Vector3
+		struct Vector2;
+		struct Vector4;
+		struct Matrix4;
+
+		struct Vector3
 		{
 			float _x, _y, _z;
 			Vector3();
-			Vector3(const float& x, const float& y, const float& z);
+			Vector3(float scalar);
+			Vector3(float x, float y, float z);
+			Vector3(const Vector2& vector);
+			Vector3(const Vector3& vector);
+			Vector3(const Vector4& vector);
 
-			Vector3 Add(const Vector3& vector) const;
-			Vector3 Add(const float& vector) const;
-			Vector3& AddEquals(const Vector3& vector);
-			Vector3& AddEquals(const float& vector);
+			float Magnitude() const;
+			float Distance(const Vector3& vector) const;
+			float Dot(const Vector3& vector) const;
 
-			Vector3 Subtract(const Vector3& vector) const;
-			Vector3 Subtract(const float& vector) const;
-			Vector3& SubtractEquals(const Vector3& vector);
-			Vector3& SubtractEquals(const float& vector);
-
-			Vector3 Multiply(const Vector3& vector) const;
-			Vector3 Multiply(const float& vector) const;
-			Vector3& MultiplyEqualsMatrix4(const float* vector);
-			Vector3& MultiplyEquals(const Vector3& vector);
-			Vector3& MultiplyEquals(const float& vector);
-
-			Vector3 Divide(const Vector3& vector) const;
-			Vector3 Divide(const float& vector) const;
-			Vector3& DivideEquals(const Vector3& vector);
-			Vector3& DivideEquals(const float& vector);
-
-			bool Compare(const Vector3& vector) const;
-			bool Compare(const float& vector) const;
+			Vector3& operator=(const Vector3& vector);
 
 			Vector3 Cross(const Vector3& vector) const;
 			Vector3& CrossEquals(const Vector3& vector);
@@ -43,37 +33,41 @@ namespace EngineTest
 			Vector3 Normalize() const;
 			Vector3& NormalizeEquals();
 
-			float Magnitude() const;
-			float Distance(const Vector3& vector) const;
-			float Dot(const Vector3& vector) const;
+			Vector3 operator+(const Vector3& vector) const;
+			Vector3 operator+(float val) const;
+			Vector3& operator+=(const Vector3& vector);
+			Vector3& operator+=(float val);
 
-			friend Vector3 operator+(const Vector3& left, const Vector3& right);
-			friend Vector3 operator+(const Vector3& left, const float& right);
-			friend Vector3& operator+=(Vector3& left, const Vector3& right);
-			friend Vector3& operator+=(Vector3& left, const float& right);
+			Vector3 operator-(const Vector3& vector) const;
+			Vector3 operator-(float val) const;
+			Vector3& operator-=(const Vector3& vector);
+			Vector3& operator-=(float val);
 
-			friend Vector3 operator-(const Vector3& left, const Vector3& right);
-			friend Vector3 operator-(const Vector3& left, const float& right);
-			friend Vector3& operator-=(Vector3& left, const Vector3& right);
-			friend Vector3& operator-=(Vector3& left, const float& right);
+			Vector3 operator*(const Vector3& vector) const;
+			Vector3 operator*(float val) const;
+			Vector3& operator*=(const Vector3& vector);
+			Vector3& operator*=(float val);
 
-			friend Vector3 operator*(const Vector3& left, const Vector3& right);
-			friend Vector3 operator*(const Vector3& left, const float& right);
-			friend Vector3& operator*=(Vector3& left, const Vector3& right);
-			friend Vector3& operator*=(Vector3& left, const float& right);
+			Vector3 operator/(const Vector3& vector) const;
+			Vector3 operator/(float val) const;
+			Vector3& operator/=(const Vector3& vector);
+			Vector3& operator/=(float val);
 
-			friend Vector3 operator/(const Vector3& left, const Vector3& right);
-			friend Vector3 operator/(const Vector3& left, const float& right);
-			friend Vector3& operator/=(Vector3& left, const Vector3& right);
-			friend Vector3& operator/=(Vector3& left, const float& right);
+			bool operator==(const Vector3& vector) const;
+			bool operator==(float val) const;
+			bool operator!=(const Vector3& vector) const;
+			bool operator!=(float val) const;
+			bool operator>=(const Vector3& vector) const;
+			bool operator>=(float val) const;
+			bool operator>(const Vector3& vector) const;
+			bool operator>(float val) const;
+			bool operator<=(const Vector3& vector) const;
+			bool operator<=(float val) const;
+			bool operator<(const Vector3& vector) const;
+			bool operator<(float val) const;
 
-			friend bool operator==(const Vector3& left, const Vector3& right);
-			friend bool operator==(const Vector3& left, const float& right);
-			friend bool operator!=(const Vector3& left, const Vector3& right);
-			friend bool operator!=(const Vector3& left, const float& right);
-
-			void Log();
-		} Vector3;
+			String ToString() const;
+		};
 	}
 }
 

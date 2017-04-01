@@ -118,7 +118,7 @@ namespace EngineTest
 
 			//Matrix4 proj = Matrix4::Orthographic(-8.0, 8.0, -6.0, 6.0, -0.1, -100.0);
 			Matrix4 proj = Matrix4::Perspective(75.0f, 4.0 / 3.0, -0.1, -100.0);
-			Matrix4 transform = Matrix4::Identitiy();
+			Matrix4 transform = Matrix4::Identity();
 			transform *= Matrix4::LookAt(Vector3(eyeX, eyeY, eyeZ), Vector3(atX, atY, atZ), Vector3(0.0f, 1.0f, 0.0f));
 			transform *= Matrix4::Translate(Vector3(3.0f, 1.0f, -5.0f));
 			transform *= Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
@@ -127,6 +127,16 @@ namespace EngineTest
 			shader.SetUniformMatrix4("pr_matrix", proj);
 			shader.SetUniformMatrix4("ml_matrix", transform);
 
+			
+			Matrix4 test(1.0f);
+			Matrix4 test2(1.0f);
+			double time0 = TimeSinceEpoch();
+			for (int i = 0; i < 10000000; i++)
+			{
+				test *= test2;
+			}
+			double time1 = TimeSinceEpoch();
+			LOG("%f", time1 - time0);
 			
 			rot += 0.03f;
 

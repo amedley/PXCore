@@ -54,7 +54,7 @@ namespace EngineTest
 		{
 			GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 
-			std::string vertSourceStr = FileUtils::Get()->ReadFile(m_VertPath);
+			String vertSourceStr = FileUtils::Get()->ReadFile(m_VertPath);
 			const char* vertSource = vertSourceStr.c_str();
 
 			glShaderSource(vertex, 1, &vertSource, NULL);
@@ -75,7 +75,7 @@ namespace EngineTest
 			}
 
 			GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-			std::string fragSourceStr = FileUtils::Get()->ReadFile(m_FragPath);
+			String fragSourceStr = FileUtils::Get()->ReadFile(m_FragPath);
 			const char* fragSource = fragSourceStr.c_str();
 
 			glShaderSource(fragment, 1, &fragSource, NULL);

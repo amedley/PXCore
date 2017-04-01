@@ -7,6 +7,7 @@
 #include "Utils/FileUtils.h"
 #include "Graphics/Shader.h"
 #include "Utils/Time.h"
+#include "Common.h"
 
 namespace EngineTest
 {

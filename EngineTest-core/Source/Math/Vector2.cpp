@@ -1,4 +1,6 @@
 #include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 
 namespace EngineTest
 {
@@ -9,112 +11,30 @@ namespace EngineTest
 			_x = 0.0f;
 			_y = 0.0f;
 		}
-		Vector2::Vector2(const float& x, const float& y)
+		Vector2::Vector2(float scalar)
+		{
+			_x = scalar;
+			_y = scalar;
+		}
+		Vector2::Vector2(float x, float y)
 		{
 			_x = x;
 			_y = y;
 		}
-
-		Vector2 Vector2::Add(const Vector2& vector) const
+		Vector2::Vector2(const Vector2& vector)
 		{
-			return Vector2(_x + vector._x, _y + vector._y);
+			_x = vector._x;
+			_y = vector._y;
 		}
-		Vector2 Vector2::Add(const float& vector) const
+		Vector2::Vector2(const Vector3& vector)
 		{
-			return Vector2(_x + vector, _y + vector);
+			_x = vector._x;
+			_y = vector._y;
 		}
-		Vector2& Vector2::AddEquals(const Vector2& vector)
+		Vector2::Vector2(const Vector4& vector)
 		{
-			_x += vector._x;
-			_y += vector._y;
-			return *this;
-		}
-		Vector2& Vector2::AddEquals(const float& vector)
-		{
-			_x += vector;
-			_y += vector;
-			return *this;
-		}
-
-		Vector2 Vector2::Subtract(const Vector2& vector) const
-		{
-			return Vector2(_x - vector._x, _y - vector._y);
-		}
-		Vector2 Vector2::Subtract(const float& vector) const
-		{
-			return Vector2(_x - vector, _y - vector);
-		}
-		Vector2& Vector2::SubtractEquals(const Vector2& vector)
-		{
-			_x -= vector._x;
-			_y -= vector._y;
-			return *this;
-		}
-		Vector2& Vector2::SubtractEquals(const float& vector)
-		{
-			_x -= vector;
-			_y -= vector;
-			return *this;
-		}
-
-		Vector2 Vector2::Multiply(const Vector2& vector) const
-		{
-			return Vector2(_x * vector._x, _y * vector._y);
-		}
-		Vector2 Vector2::Multiply(const float& vector) const
-		{
-			return Vector2(_x * vector, _y * vector);
-		}
-		Vector2& Vector2::MultiplyEquals(const Vector2& vector)
-		{
-			_x *= vector._x;
-			_y *= vector._y;
-			return *this;
-		}
-		Vector2& Vector2::MultiplyEquals(const float& vector)
-		{
-			_x *= vector;
-			_y *= vector;
-			return *this;
-		}
-
-		Vector2 Vector2::Divide(const Vector2& vector) const
-		{
-			return Vector2(_x / vector._x, _y / vector._y);
-		}
-		Vector2 Vector2::Divide(const float& vector) const
-		{
-			return Vector2(_x / vector, _y / vector);
-		}
-		Vector2& Vector2::DivideEquals(const Vector2& vector)
-		{
-			_x /= vector._x;
-			_y /= vector._y;
-			return *this;
-		}
-		Vector2& Vector2::DivideEquals(const float& vector)
-		{
-			_x /= vector;
-			_y /= vector;
-			return *this;
-		}
-
-		bool Vector2::Compare(const Vector2& vector) const
-		{
-			return _x == vector._x && _y == vector._y;
-		}
-		bool Vector2::Compare(const float& vector) const
-		{
-			return _x == vector && _y == vector;
-		}
-
-		Vector2 Vector2::Normalize() const
-		{
-			return Divide(Magnitude());
-		}
-		Vector2& Vector2::NormalizeEquals()
-		{
-			return DivideEquals(Magnitude());
+			_x = vector._x;
+			_y = vector._y;
 		}
 
 		float Vector2::Magnitude() const
@@ -132,94 +52,164 @@ namespace EngineTest
 			return _x * vector._x + _y * vector._y;
 		}
 
-		Vector2 operator+(const Vector2& left, const Vector2& right)
+
+		Vector2& Vector2::operator=(const Vector2& vector)
 		{
-			return left.Add(right);
-		}
-		Vector2 operator+(const Vector2& left, const float& right)
-		{
-			return left.Add(right);
-		}
-		Vector2& operator+=(Vector2& left, const Vector2& right)
-		{
-			return left.AddEquals(right);
-		}
-		Vector2& operator+=(Vector2& left, const float& right)
-		{
-			return left.AddEquals(right);
+			_x = vector._x;
+			_y = vector._y;
+			return *this;
 		}
 
-		Vector2 operator-(const Vector2& left, const Vector2& right)
+		Vector2 Vector2::Normalize() const
 		{
-			return left.Subtract(right);
+			Vector2 result = *this;
+			return result / Magnitude();
 		}
-		Vector2 operator-(const Vector2& left, const float& right)
+		Vector2& Vector2::NormalizeEquals()
 		{
-			return left.Subtract(right);
-		}
-		Vector2& operator-=(Vector2& left, const Vector2& right)
-		{
-			return left.SubtractEquals(right);
-		}
-		Vector2& operator-=(Vector2& left, const float& right)
-		{
-			return left.SubtractEquals(right);
+			*this /= Magnitude();
+			return *this;
 		}
 
-		Vector2 operator*(const Vector2& left, const Vector2& right)
+		Vector2 Vector2::operator+(const Vector2& vector) const
 		{
-			return left.Multiply(right);
+			Vector2 result(_x + vector._x, _y + vector._y);
+			return result;
 		}
-		Vector2 operator*(const Vector2& left, const float& right)
+		Vector2 Vector2::operator+(float val) const
 		{
-			return left.Multiply(right);
+			return Vector2(_x + val, _y + val);
 		}
-		Vector2& operator*=(Vector2& left, const Vector2& right)
+		Vector2& Vector2::operator+=(const Vector2& vector)
 		{
-			return left.MultiplyEquals(right);
+			_x += vector._x;
+			_y += vector._y;
+			return *this;
 		}
-		Vector2& operator*=(Vector2& left, const float& right)
+		Vector2& Vector2::operator+=(float val)
 		{
-			return left.MultiplyEquals(right);
-		}
-
-		Vector2 operator/(const Vector2& left, const Vector2& right)
-		{
-			return left.Divide(right);
-		}
-		Vector2 operator/(const Vector2& left, const float& right)
-		{
-			return left.Divide(right);
-		}
-		Vector2& operator/=(Vector2& left, const Vector2& right)
-		{
-			return left.DivideEquals(right);
-		}
-		Vector2& operator/=(Vector2& left, const float& right)
-		{
-			return left.DivideEquals(right);
+			_x += val;
+			_y += val;
+			return *this;
 		}
 
-		bool operator==(const Vector2& left, const Vector2& right)
+		Vector2 Vector2::operator-(const Vector2& vector) const
 		{
-			return left.Compare(right);
+			return Vector2(_x - vector._x, _y - vector._y);
 		}
-		bool operator==(const Vector2& left, const float& right)
+		Vector2 Vector2::operator-(float val) const
 		{
-			return left.Compare(right);
+			return Vector2(_x - val, _y - val);
 		}
-		bool operator!=(const Vector2& left, const Vector2& right)
+		Vector2& Vector2::operator-=(const Vector2& vector)
 		{
-			return !left.Compare(right);
+			_x -= vector._x;
+			_y -= vector._y;
+			return *this;
 		}
-		bool operator!=(const Vector2& left, const float& right)
+		Vector2& Vector2::operator-=(float val)
 		{
-			return !left.Compare(right);
+			_x -= val;
+			_y -= val;
+			return *this;
 		}
 
-		void Vector2::Log()
+		Vector2 Vector2::operator*(const Vector2& vector) const
 		{
-			LOG("Vector2: %f, %f", _x, _y);
+			return Vector2(_x * vector._x, _y * vector._y);
+		}
+		Vector2 Vector2::operator*(float val) const
+		{
+			return Vector2(_x * val, _y * val);
+		}
+		Vector2& Vector2::operator*=(const Vector2& vector)
+		{
+			_x *= vector._x;
+			_y *= vector._y;
+			return *this;
+		}
+		Vector2& Vector2::operator*=(float val)
+		{
+			_x *= val;
+			_y *= val;
+			return *this;
+		}
+
+		Vector2 Vector2::operator/(const Vector2& vector) const
+		{
+			return Vector2(_x / vector._x, _y / vector._y);
+		}
+		Vector2 Vector2::operator/(float val) const
+		{
+			return Vector2(_x / val, _y / val);
+		}
+		Vector2& Vector2::operator/=(const Vector2& vector)
+		{
+			_x /= vector._x;
+			_y /= vector._y;
+			return *this;
+		}
+		Vector2& Vector2::operator/=(float val)
+		{
+			_x /= val;
+			_y /= val;
+			return *this;
+		}
+
+		bool Vector2::operator==(const Vector2& vector) const
+		{
+			return _x == vector._x && _y == vector._y;
+		}
+		bool Vector2::operator==(float val) const
+		{
+			return _x == val && _y == val;
+		}
+		bool Vector2::operator!=(const Vector2& vector) const
+		{
+			return !(*this == vector);
+		}
+		bool Vector2::operator!=(float val) const
+		{
+			return !(*this == val);
+		}
+		bool Vector2::operator>=(const Vector2& vector) const
+		{
+			return _x >= vector._x && _y >= vector._y;
+		}
+		bool Vector2::operator>=(float val) const
+		{
+			return _x >= val && _y >= val;
+		}
+		bool Vector2::operator>(const Vector2& vector) const
+		{
+			return _x > vector._x && _y > vector._y;
+		}
+		bool Vector2::operator>(float val) const
+		{
+			return _x > val && _y > val;
+		}
+		bool Vector2::operator<=(const Vector2& vector) const
+		{
+			return _x <= vector._x && _y <= vector._y;
+		}
+		bool Vector2::operator<=(float val) const
+		{
+			return _x <= val && _y <= val;
+		}
+		bool Vector2::operator<(const Vector2& vector) const
+		{
+			return _x < vector._x && _y < vector._y;
+		}
+		bool Vector2::operator<(float val) const
+		{
+			return _x < val && _y < val;
+		}
+
+		String Vector2::ToString() const
+		{
+			std::stringstream result;
+			result << "Vector2: (" << _x << ", " << _y << ")";
+			return result.str();
 		}
 	}
 }

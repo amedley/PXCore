@@ -106,7 +106,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -133,22 +133,29 @@
     <ClCompile Include="Source\Graphics\Window.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Math\Matrix4.cpp" />
+    <ClCompile Include="Source\Math\Quaternion.cpp" />
     <ClCompile Include="Source\Math\Vector2.cpp" />
     <ClCompile Include="Source\Math\Vector3.cpp" />
     <ClCompile Include="Source\Math\Vector4.cpp" />
+    <ClCompile Include="Source\String.cpp" />
     <ClCompile Include="Source\Utils\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Common.h" />
+    <ClInclude Include="Source\CommonIncludes.h" />
+    <ClInclude Include="Source\CommonTypes.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\Window.h" />
     <ClInclude Include="Source\Math\Math.h" />
     <ClInclude Include="Source\Math\Matrix4.h" />
+    <ClInclude Include="Source\Math\Quaternion.h" />
     <ClInclude Include="Source\Math\Vector2.h" />
     <ClInclude Include="Source\Math\Vector3.h" />
     <ClInclude Include="Source\Math\Vector4.h" />
     <ClInclude Include="Source\Math\Vectors.h" />
+    <ClInclude Include="Source\String.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
     <ClInclude Include="Source\Utils\Time.h" />
   </ItemGroup>

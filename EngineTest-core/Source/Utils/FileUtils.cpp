@@ -43,7 +43,7 @@ namespace EngineTest
 			LOG("FileUtils deallocated");
 		}
 
-		std::string FileUtils::ReadFile(const char* filePath)
+		String FileUtils::ReadFile(const char* filePath)
 		{
 			// Open file
 			FILE* file = fopen(filePath, "rt");
@@ -62,7 +62,7 @@ namespace EngineTest
 			fclose(file);
 
 			// Store this data into a string, delete the data array, and return the result
-			std::string result(data);
+			String result(data);
 			delete[] data;
 			return result;
 		}

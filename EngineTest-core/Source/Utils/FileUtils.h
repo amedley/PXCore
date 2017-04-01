@@ -1,8 +1,7 @@
 #ifndef FILE_UTILS_H
 #define FILE_UTILS_H
 
-#include "../Debug.h"
-#include <string>
+#include "../Common.h"
 #include <fstream>
 
 namespace EngineTest
@@ -23,7 +22,7 @@ namespace EngineTest
 			FileUtils();
 			~FileUtils();
 		public:
-			std::string ReadFile(const char* filePath);
+			String ReadFile(const char* filePath);
 		};
 	}
 }
