@@ -191,7 +191,7 @@ namespace EngineTest
 		{
 			float* src = (float*)&matrix;
 
-			float data[]
+			/*float data[]
 			{
 				_elements[0] * src[0]  +	_elements[4] * src[1]  +	_elements[8]  * src[2]  +	_elements[12] * src[3],
 				_elements[1] * src[0]  +	_elements[5] * src[1]  +	_elements[9]  * src[2]  +	_elements[13] * src[3],
@@ -209,7 +209,21 @@ namespace EngineTest
 				_elements[1] * src[12] +	_elements[5] * src[13] +	_elements[9]  * src[14] +	_elements[13] * src[15],
 				_elements[2] * src[12] +	_elements[6] * src[13] +	_elements[10] * src[14] +	_elements[14] * src[15],
 				_elements[3] * src[12] +	_elements[7] * src[13] +	_elements[11] * src[14] +	_elements[15] * src[15]
-			};
+			};*/
+
+			float data[16];
+			for (int y = 0; y < 4; y++)
+			{
+				for (int x = 0; x < 4; x++)
+				{
+					float sum = 0;
+					for (int e = 0; e < 4; e++)
+					{
+						sum += _elements[x + e * 4] * src[e + y * 4];
+					}
+					data[x + y * 4] = sum;
+				}
+			}
 
 			memcpy(_elements, data, sizeof(float) * 16);
 			return *this;
