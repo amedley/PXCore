@@ -11,29 +11,31 @@ namespace EngineTest
 {
 	namespace Math
 	{
+		struct Quaternion;
+
 		struct Matrix4
 		{
 			union
 			{
 				float _elements[16];
-				Vector4 _rows[4];
+				Vector4 _columns[4];
 			};
 			Matrix4();
 			Matrix4(const Matrix4& matrix);
 			Matrix4(float diagonal);
 			Matrix4(float* elements);
-			Matrix4(const Vector4& column0, const Vector4& row1, const Vector4& row2, const Vector4& row3);
+			Matrix4(const Vector4& column0, const Vector4& column1, const Vector4& column2, const Vector4& column3);
 
 			Matrix4& Invert();
 
-			Vector4 GetColumn(int index) const;
-			void SetColumn(uint32_t index, const Vector4& column);
-			inline Vector3 GetPosition() const { return Vector3(GetColumn(3)); }
-			inline void SetPosition(const Vector3& position) { SetColumn(3, Vector4(position, 1.0f)); }
+			float operator[](int index) const;
+			float& operator[](int index);
 
 			Matrix4& operator=(const Matrix4& matrix);
 			Matrix4 operator*(const Matrix4& matrix) const;
-			Matrix4& operator*=(const Matrix4& matrix);
+
+			Vector3 GetPosition() const;
+			void SetPosition(Vector3& position);
 
 			static Matrix4 Identity();
 			
@@ -43,7 +45,8 @@ namespace EngineTest
 
 			static Matrix4 Translate(const Vector3& translate);
 			static Matrix4 Scale(const Vector3& scale);
-			static Matrix4 Rotate(double angle, const Vector3& axis);
+			static Matrix4 Rotate(float radians, const Vector3& unitVec);
+			static Matrix4 Rotate(const Quaternion& quat);
 			static Matrix4 Invert(const Matrix4& matrix);
 
 			static Matrix4 Transpose(const Matrix4& matrix);

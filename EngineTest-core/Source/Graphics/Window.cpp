@@ -68,6 +68,7 @@ namespace EngineTest
 			glfwSetKeyCallback(m_Window, Window::key_callback);
 			glfwSetMouseButtonCallback(m_Window, Window::mouse_button_callback);
 			glfwSetCursorPosCallback(m_Window, Window::cursor_position_callback);
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 			if (glewInit() != GLEW_OK)
 			{
@@ -76,6 +77,10 @@ namespace EngineTest
 				return false;
 			}
 			LOG((const char *)glGetString(GL_VERSION));
+
+			glDepthMask(GL_TRUE);
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LEQUAL);
 
 			return true;
 		}
@@ -91,7 +96,7 @@ namespace EngineTest
 
 		void Window::Clear() const
 		{
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 		void Window::OnUpdate()
 		{
@@ -107,6 +112,8 @@ namespace EngineTest
 				m_MouseButtonsPressed[i] = false;
 				m_MouseButtonsReleased[i] = false;
 			}
+			m_LastMouseX = m_MouseX;
+			m_LastMouseY = m_MouseY;
 			glfwPollEvents();
 			glfwSwapBuffers(m_Window);
 		}
@@ -201,6 +208,12 @@ namespace EngineTest
 			Window* windowRef = (Window*)glfwGetWindowUserPointer(window);
 			windowRef->m_MouseX = xpos;
 			windowRef->m_MouseY = ypos;
+			if (!windowRef->m_HasSetLastMousePositionOnce)
+			{
+				windowRef->m_LastMouseX = windowRef->m_MouseX;
+				windowRef->m_LastMouseY = windowRef->m_MouseY;
+				windowRef->m_HasSetLastMousePositionOnce = true;
+			}
 		}
 	}
 }

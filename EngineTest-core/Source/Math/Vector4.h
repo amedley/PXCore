@@ -9,6 +9,7 @@ namespace EngineTest
 	{
 		struct Vector2;
 		struct Vector3;
+		struct Matrix4;
 
 		struct Vector4
 		{
@@ -29,6 +30,8 @@ namespace EngineTest
 
 			Vector4 Normalize() const;
 			Vector4& NormalizeEquals();
+
+			Vector4 Multiply(const Matrix4& transform) const;
 
 			Vector4 operator+(const Vector4& vector) const;
 			Vector4 operator+(float val) const;

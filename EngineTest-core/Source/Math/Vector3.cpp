@@ -44,6 +44,40 @@ namespace EngineTest
 			_z = vector._z;
 		}
 
+		Vector3 Vector3::Up()
+		{
+			return Vector3(0.0f, 1.0f, 0.0f);
+		}
+		Vector3 Vector3::Down()
+		{
+			return Vector3(0.0f, -1.0f, 0.0f);
+		}
+		Vector3 Vector3::Left()
+		{
+			return Vector3(-1.0f, 0.0f, 0.0f);
+		}
+		Vector3 Vector3::Right()
+		{
+			return Vector3(1.0f, 0.0f, 0.0f);
+		}
+		Vector3 Vector3::Zero()
+		{
+			return Vector3(0.0f, 0.0f, 0.0f);
+		}
+
+		Vector3 Vector3::XAxis()
+		{
+			return Vector3(1.0f, 0.0f, 0.0f);
+		}
+		Vector3 Vector3::YAxis()
+		{
+			return Vector3(0.0f, 1.0f, 0.0f);
+		}
+		Vector3 Vector3::ZAxis()
+		{
+			return Vector3(0.0f, 0.0f, 1.0f);
+		}
+
 		float Vector3::Magnitude() const
 		{
 			return sqrtf(_x * _x + _y * _y + _z * _z);
@@ -86,12 +120,31 @@ namespace EngineTest
 		Vector3 Vector3::Normalize() const
 		{
 			Vector3 result = *this;
+			float mag = Magnitude();
+			if (mag == 0.0f)
+				return Vector3(1.0f, 1.0f, 1.0f).NormalizeEquals();
 			return result / Magnitude();
 		}
 		Vector3& Vector3::NormalizeEquals()
 		{
+			float mag = Magnitude();
+			if (mag == 0.0f)
+			{
+				_x = _y = _z = 1.0f;
+				*this /= Magnitude();
+				return *this;
+			}
 			*this /= Magnitude();
 			return *this;
+		}
+
+		Vector3 Vector3::Multiply(const Matrix4& transform) const
+		{
+			return Vector3(
+				transform[0] * _x + transform[4] * _y + transform[8] * _z + transform[12],
+				transform[1] * _x + transform[5] * _y + transform[9] * _z + transform[13],
+				transform[2] * _x + transform[6] * _y + transform[10] * _z + transform[14]
+			);
 		}
 
 		Vector3 Vector3::operator+(const Vector3& vector) const
@@ -233,6 +286,11 @@ namespace EngineTest
 		bool Vector3::operator<(float val) const
 		{
 			return _x < val && _y < val && _z < val;
+		}
+
+		Vector3 operator-(const Vector3& vector)
+		{
+			return Vector3(-vector._x, -vector._y, -vector._z);
 		}
 
 		String Vector3::ToString() const

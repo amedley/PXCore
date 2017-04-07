@@ -52,7 +52,7 @@ namespace EngineTest
 		Window::Construct();
 
 		FileUtils::Get()->Init();
-		Window::Get()->Init("EngineTest!", 800, 600);
+		Window::Get()->Init("EngineTest!", 1280, 720);
 		glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 
 		
@@ -60,86 +60,81 @@ namespace EngineTest
 
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, 0);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, _color)));
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 7, (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, _position)));
 		glEnableVertexAttribArray(1);
-
-		float vertices[]
-		{
-			-0.5f, -0.5f, +0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-			-0.5f, +0.5f, +0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			+0.5f, +0.5f, +0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			+0.5f, +0.5f, +0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			+0.5f, -0.5f, +0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-			-0.5f, -0.5f, +0.0f, 0.0f, 0.0f, 0.0f, 1.0f
-		};
-
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 		
 		Shader shader("Resources/Shaders/basic.vert", "Resources/Shaders/basic.frag");
 		shader.Enable();
 
-		float rot = 0.0f;
+		float speed = 0.01f;
+		Vector3 position(0.0f, 0.0f, 0.0f);
 
-		float eyeX = 0.0f;
-		float eyeY = 0.0f;
-		float eyeZ = -0.1f;
-		float atX = eyeX;
-		float atY = eyeY;
-		float atZ = eyeZ - 1.0f;
+		float pitch = 0.0f;
+		float yaw = 0.0f;
+
+		shader.SetUniformMatrix4("pr_matrix", Matrix4::Perspective(65.0f, 16.0 / 9.0, 0.001, 1000.0));
 
 		while (!Window::Get()->IsClosed())
 		{
+			yaw -= (float)Window::Get()->GetMouseDX() * 0.0025f;
+			pitch -= (float)Window::Get()->GetMouseDY() * 0.0025f;
+			pitch = Clamp(pitch, -PI / 2.1f, PI / 2.1f);
+
+			Quaternion orientation = Quaternion::RotationY(yaw) * Quaternion::RotationX(pitch);
+
+			Vector3 cameraForward = Quaternion::Rotate(orientation, -Vector3::ZAxis()).Normalize();
+			Vector3 cameraUp = Quaternion::Rotate(orientation, Vector3::YAxis()).Normalize();
+			Vector3 cameraRight = Quaternion::Rotate(orientation, Vector3::XAxis()).Normalize();
+
 			if (Window::Get()->IsKeyDown(GLFW_KEY_W))
 			{
-				eyeZ -= 0.01f;
-				atZ -= 0.01f;
-			}
-			if (Window::Get()->IsKeyDown(GLFW_KEY_A))
-			{
-				eyeX -= 0.01f;
-				atX -= 0.01f;
+				position += cameraForward * speed;
 			}
 			if (Window::Get()->IsKeyDown(GLFW_KEY_S))
 			{
-				eyeZ += 0.01f;
-				atZ += 0.01f;
+				position -= cameraForward * speed;
 			}
 			if (Window::Get()->IsKeyDown(GLFW_KEY_D))
 			{
-				eyeX += 0.01f;
-				atX += 0.01f;
+				position += cameraRight * speed;
+			}
+			if (Window::Get()->IsKeyDown(GLFW_KEY_A))
+			{
+				position -= cameraRight * speed;
+			}
+			if (Window::Get()->IsKeyDown(GLFW_KEY_SPACE))
+			{
+				position += Vector3(0.0f, 1.0f, 0.0f) * speed;
+			}
+			if (Window::Get()->IsKeyDown(GLFW_KEY_LEFT_CONTROL))
+			{
+				position -= Vector3(0.0f, 1.0f, 0.0f) * speed;
 			}
 
 			Window::Get()->Clear();
 
-			//Matrix4 proj = Matrix4::Orthographic(-8.0, 8.0, -6.0, 6.0, -0.1, -100.0);
-			Matrix4 proj = Matrix4::Perspective(75.0f, 4.0 / 3.0, -0.1, -100.0);
-			Matrix4 transform = Matrix4::Identity();
-			transform *= Matrix4::LookAt(Vector3(eyeX, eyeY, eyeZ), Vector3(atX, atY, atZ), Vector3(0.0f, 1.0f, 0.0f));
-			transform *= Matrix4::Translate(Vector3(3.0f, 1.0f, -5.0f));
-			transform *= Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
-			transform *= Matrix4::Rotate(rot, Vector3(1.0f, 1.0f, 1.0f).NormalizeEquals());
 
-			shader.SetUniformMatrix4("pr_matrix", proj);
-			shader.SetUniformMatrix4("ml_matrix", transform);
+			//Matrix4 view = Matrix4::LookAt(position, position + cameraForward, cameraUp);
+			Matrix4 view = Matrix4::Rotate(orientation.Conjugate()) * Matrix4::Translate(-position);
+			Matrix4 model = Matrix4::Translate(Vector3(0.0f, 0.0f, -10.0f));
+			model = model * Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
 
-			
-			Matrix4 test(1.0f);
-			Matrix4 test2(1.0f);
-			double time0 = TimeSinceEpoch();
-			for (int i = 0; i < 10000000; i++)
+			Matrix4 transform = view * model;
+			Vertex vertices[]
 			{
-				test *= test2;
-			}
-			double time1 = TimeSinceEpoch();
-			LOG("%f", time1 - time0);
-			
-			rot += 0.03f;
-
+				Vector3(-1.0f, -1.0f, +0.0f).Multiply(transform), Vector4(0.0f, 0.0f, 0.0f, 1.0f),
+				Vector3(-1.0f, +1.0f, +0.0f).Multiply(transform), Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+				Vector3(+1.0f, +1.0f, +0.0f).Multiply(transform), Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+				Vector3(+1.0f, +1.0f, +0.0f).Multiply(transform), Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+				Vector3(+1.0f, -1.0f, +0.0f).Multiply(transform), Vector4(1.0f, 1.0f, 1.0f, 1.0f),
+				Vector3(-1.0f, -1.0f, +0.0f).Multiply(transform), Vector4(0.0f, 0.0f, 0.0f, 1.0f)
+			};
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 			
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 

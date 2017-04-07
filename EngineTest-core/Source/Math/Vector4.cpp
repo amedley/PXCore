@@ -1,6 +1,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
+#include "Matrix4.h"
 
 namespace EngineTest
 {
@@ -92,6 +93,16 @@ namespace EngineTest
 		{
 			*this /= Magnitude();
 			return *this;
+		}
+
+		Vector4 Vector4::Multiply(const Matrix4& transform) const
+		{
+			return Vector4(
+				transform[0] * _x + transform[4] * _y + transform[8] * _z + transform[12] * _w,
+				transform[1] * _x + transform[5] * _y + transform[9] * _z + transform[13] * _w,
+				transform[2] * _x + transform[6] * _y + transform[10] * _z + transform[14] * _w,
+				transform[3] * _x + transform[7] * _y + transform[11] * _z + transform[15] * _w
+			);
 		}
 
 		Vector4 Vector4::operator+(const Vector4& vector) const

@@ -24,6 +24,7 @@ namespace EngineTest
 			bool Init(const char* title, int width, int height);
 		private:
 			bool m_Initialized;
+			bool m_HasSetLastMousePositionOnce;
 		private:
 			Window();
 			~Window();
@@ -37,7 +38,7 @@ namespace EngineTest
 			bool m_MouseButtonsDown[MAX_MOUSE_BUTTONS];
 			bool m_MouseButtonsPressed[MAX_MOUSE_BUTTONS];
 			bool m_MouseButtonsReleased[MAX_MOUSE_BUTTONS];
-			double m_MouseX, m_MouseY;
+			double m_MouseX, m_MouseY, m_LastMouseX, m_LastMouseY;
 		public:
 			void Clear() const;
 			void OnUpdate();
@@ -56,6 +57,8 @@ namespace EngineTest
 			inline int GetHeight() const { return m_Height; }
 			inline double GetMouseX() const { return m_MouseX; }
 			inline double GetMouseY() const { return m_MouseY; }
+			inline double GetMouseDX() const { return m_MouseX - m_LastMouseX; }
+			inline double GetMouseDY() const { return m_MouseY - m_LastMouseY; }
 		private:
 			static void resize_callback(GLFWwindow* window, int width, int height);
 			static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

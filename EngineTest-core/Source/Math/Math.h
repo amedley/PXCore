@@ -10,7 +10,9 @@ namespace EngineTest
 	namespace Math
 	{
 
-#define ToRadians(degrees) degrees * M_PI / 180.0
+#define PI 3.141592653589793f
+#define ToRadians(degrees) degrees * PI / 180.0
+#define ToDegrees(radians) radians * 180 / PI
 #define Max(a, b) a > b ? a : b
 #define Min(a, b) a > b ? a : b
 #define Clamp(val, min, max) val < min ? min : val > max ? max : val

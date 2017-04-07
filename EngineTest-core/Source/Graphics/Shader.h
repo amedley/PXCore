@@ -5,11 +5,20 @@
 #include "../Utils/FileUtils.h"
 #include "GL/glew.h"
 #include "../Math/Math.h"
+#include "../Math/Vector3.h"
+#include "../Math/Vector4.h"
 
 namespace EngineTest
 {
 	namespace Graphics
 	{
+		using namespace Math;
+
+		struct Vertex
+		{
+			Vector4 _color;
+			Vector3 _position;
+		};
 
 #define MAX_UNIFORM_LOCATIONS 32
 
