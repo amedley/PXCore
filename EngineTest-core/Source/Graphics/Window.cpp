@@ -4,33 +4,8 @@ namespace EngineTest
 {
 	namespace Graphics
 	{
-		Window* Window::s_Instance = nullptr;
-		void Window::Construct()
+		Window::Window(const char* title, int width, int height)
 		{
-			if (s_Instance)
-				Assert(false, "s_Instance of Game already exists!");
-			s_Instance = new Window();
-		}
-		void Window::Shutdown()
-		{
-			if (!s_Instance)
-				Assert(false, "s_Instance of Game does not exist!");
-			delete s_Instance;
-		}
-		Window* Window::Get()
-		{
-			if (!s_Instance)
-				Assert(false, "s_Instance of Window does not exist!");
-			return s_Instance;
-		}
-		bool Window::Init(const char* title, int width, int height)
-		{
-			if (m_Initialized)
-			{
-				Assert(false, "Window already initialized!");
-				return false;
-			}
-			m_Initialized = true;
 
 			m_Title = title;
 			m_Width = width;
@@ -53,14 +28,14 @@ namespace EngineTest
 			if (!glfwInit())
 			{
 				Assert(false, "Failed to initialize GLFEW!");
-				return false;
+				return;
 			}
 			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
 			if (!m_Window)
 			{
 				Assert(false, "There was a problem with glfwCreateWindow!");
 				glfwTerminate();
-				return false;
+				return;
 			}
 			glfwMakeContextCurrent(m_Window);
 			glfwSetWindowUserPointer(m_Window, this);
@@ -74,7 +49,7 @@ namespace EngineTest
 			{
 				Assert(false, "Could not initialize GLEW!");
 				glfwTerminate();
-				return false;
+				return;
 			}
 			LOG((const char *)glGetString(GL_VERSION));
 
@@ -82,16 +57,11 @@ namespace EngineTest
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LEQUAL);
 
-			return true;
-		}
-		Window::Window()
-		{
-			m_Initialized = false;
+			LOG("Window created successfully!");
 		}
 		Window::~Window()
 		{
 			glfwTerminate();
-			LOG("Window deallocated");
 		}
 
 		void Window::Clear() const

@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Graphics\Rendering\Renderer2D.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Window.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -138,7 +139,9 @@
     <ClCompile Include="Source\Math\Vector2.cpp" />
     <ClCompile Include="Source\Math\Vector3.cpp" />
     <ClCompile Include="Source\Math\Vector4.cpp" />
+    <ClCompile Include="Source\Singletons.cpp" />
     <ClCompile Include="Source\String.cpp" />
+    <ClCompile Include="Source\System\Machine.cpp" />
     <ClCompile Include="Source\Utils\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +150,7 @@
     <ClInclude Include="Source\CommonTypes.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\Graphics\Rendering\Renderer2D.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\Window.h" />
     <ClInclude Include="Source\Math\Math.h" />
@@ -156,7 +160,9 @@
     <ClInclude Include="Source\Math\Vector3.h" />
     <ClInclude Include="Source\Math\Vector4.h" />
     <ClInclude Include="Source\Math\Vectors.h" />
+    <ClInclude Include="Source\Singletons.h" />
     <ClInclude Include="Source\String.h" />
+    <ClInclude Include="Source\System\Machine.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
     <ClInclude Include="Source\Utils\Time.h" />
   </ItemGroup>

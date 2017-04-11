@@ -1,11 +1,10 @@
-#include "Game.h"
+#include "Singletons.h"
 
 int main()
 {
 	using namespace EngineTest;
 	
-	Game::Construct();
-	Game::Get()->Init();
+	Singletons::Get()->Construct();
 
 	return 0;
 }

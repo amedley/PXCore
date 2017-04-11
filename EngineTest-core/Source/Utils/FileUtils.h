@@ -10,15 +10,7 @@ namespace EngineTest
 	{
 		class FileUtils
 		{
-			static FileUtils* s_Instance;
 		public:
-			static void Construct();
-			static void Shutdown();
-			static FileUtils* Get();
-			bool Init();
-		private:
-			bool m_Initialized;
-		private:
 			FileUtils();
 			~FileUtils();
 		public:

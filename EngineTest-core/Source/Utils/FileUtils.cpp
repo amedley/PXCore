@@ -4,43 +4,12 @@ namespace EngineTest
 {
 	namespace Utils
 	{
-		FileUtils* FileUtils::s_Instance = nullptr;
-		FileUtils* FileUtils::Get()
-		{
-			if (!s_Instance)
-				Assert(false, "s_Instance of FileUtils does not exist!");
-			return s_Instance;
-		}
-		void FileUtils::Construct()
-		{
-			if (s_Instance)
-				Assert(false, "s_Instance of FileUtils already exists!");
-			s_Instance = new FileUtils();
-		}
-		void FileUtils::Shutdown()
-		{
-			if (!s_Instance)
-				Assert(false, "s_Instance of FileUtils does not exist!");
-			delete s_Instance;
-		}
-		bool FileUtils::Init()
-		{
-			if (m_Initialized)
-			{
-				Assert(false, "Window already initialized!");
-				return false;
-			}
-			m_Initialized = true;
-			return true;
-		}
 		FileUtils::FileUtils()
 		{
-			m_Initialized = false;
 		}
 
 		FileUtils::~FileUtils()
 		{
-			LOG("FileUtils deallocated");
 		}
 
 		String FileUtils::ReadFile(const char* filePath)

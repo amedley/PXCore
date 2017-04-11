@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "../Singletons.h"
 
 namespace EngineTest
 {
@@ -54,7 +55,7 @@ namespace EngineTest
 		{
 			GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 
-			String vertSourceStr = FileUtils::Get()->ReadFile(m_VertPath);
+			String vertSourceStr = Singletons::GetFileUtils()->ReadFile(m_VertPath);
 			const char* vertSource = vertSourceStr.c_str();
 
 			glShaderSource(vertex, 1, &vertSource, NULL);
@@ -75,7 +76,7 @@ namespace EngineTest
 			}
 
 			GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-			String fragSourceStr = FileUtils::Get()->ReadFile(m_FragPath);
+			String fragSourceStr = Singletons::GetFileUtils()->ReadFile(m_FragPath);
 			const char* fragSource = fragSourceStr.c_str();
 
 			glShaderSource(fragment, 1, &fragSource, NULL);

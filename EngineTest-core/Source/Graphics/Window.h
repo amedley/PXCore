@@ -16,18 +16,11 @@ namespace EngineTest
 
 		class Window
 		{
-			static Window* s_Instance;
 		public:
-			static void Construct();
-			static void Shutdown();
-			static Window* Get();
-			bool Init(const char* title, int width, int height);
-		private:
-			bool m_Initialized;
-			bool m_HasSetLastMousePositionOnce;
-		private:
-			Window();
+			Window(const char* title, int width, int height);
 			~Window();
+		private:
+			bool m_HasSetLastMousePositionOnce;
 			const char* m_Title;
 			int m_Width, m_Height;
 			GLFWwindow* m_Window;
