@@ -128,9 +128,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Entities\Camera2D.cpp" />
+    <ClCompile Include="Source\Entities\Entity2D.cpp" />
+    <ClCompile Include="Source\Entities\Group2D.cpp" />
+    <ClCompile Include="Source\Entities\Layer2D.cpp" />
+    <ClCompile Include="Source\Entities\Camera.cpp" />
+    <ClCompile Include="Source\Entities\ColorRGBA.cpp" />
+    <ClCompile Include="Source\Entities\Rect2D.cpp" />
+    <ClCompile Include="Source\Entities\Transform2D.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Graphics\Rendering\IndexBuffer.cpp" />
+    <ClCompile Include="Source\Graphics\Rendering\Renderer.cpp" />
     <ClCompile Include="Source\Graphics\Rendering\Renderer2D.cpp" />
-    <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\Rendering\VertexBuffer.cpp" />
+    <ClCompile Include="Source\Graphics\Shaders\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\Shaders\ShaderBasic2D.cpp" />
+    <ClCompile Include="Source\Graphics\Shaders\ShaderBasic3D.cpp" />
+    <ClCompile Include="Source\Graphics\Shaders\ShaderFactory.cpp" />
     <ClCompile Include="Source\Graphics\Window.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Math\Math.cpp" />
@@ -149,9 +163,26 @@
     <ClInclude Include="Source\CommonIncludes.h" />
     <ClInclude Include="Source\CommonTypes.h" />
     <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\Entities\Camera.h" />
+    <ClInclude Include="Source\Entities\Camera2D.h" />
+    <ClInclude Include="Source\Entities\Common2DForwardDcls.h" />
+    <ClInclude Include="Source\Entities\Common2DIncludes.h" />
+    <ClInclude Include="Source\Entities\Entity2D.h" />
+    <ClInclude Include="Source\Entities\Group2D.h" />
+    <ClInclude Include="Source\Entities\Layer2D.h" />
+    <ClInclude Include="Source\Entities\ColorRGBA.h" />
+    <ClInclude Include="Source\Entities\Rect2D.h" />
+    <ClInclude Include="Source\Entities\Transform2D.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\Graphics\Rendering\IndexBuffer.h" />
+    <ClInclude Include="Source\Graphics\Rendering\Renderer.h" />
     <ClInclude Include="Source\Graphics\Rendering\Renderer2D.h" />
-    <ClInclude Include="Source\Graphics\Shader.h" />
+    <ClInclude Include="Source\Graphics\Rendering\Vertex2DTypes.h" />
+    <ClInclude Include="Source\Graphics\Rendering\VertexBuffer.h" />
+    <ClInclude Include="Source\Graphics\Shaders\Shader.h" />
+    <ClInclude Include="Source\Graphics\Shaders\ShaderBasic2D.h" />
+    <ClInclude Include="Source\Graphics\Shaders\ShaderBasic3D.h" />
+    <ClInclude Include="Source\Graphics\Shaders\ShaderFactory.h" />
     <ClInclude Include="Source\Graphics\Window.h" />
     <ClInclude Include="Source\Math\Math.h" />
     <ClInclude Include="Source\Math\Matrix4.h" />
@@ -164,11 +195,14 @@
     <ClInclude Include="Source\String.h" />
     <ClInclude Include="Source\System\Machine.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
+    <ClInclude Include="Source\Utils\ThreadUtils.h" />
     <ClInclude Include="Source\Utils\Time.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shaders\basic.frag" />
-    <None Include="Resources\Shaders\basic.vert" />
+    <None Include="Resources\Shaders\basic2D.frag" />
+    <None Include="Resources\Shaders\basic2D.vert" />
+    <None Include="Resources\Shaders\basic3D.frag" />
+    <None Include="Resources\Shaders\basic3D.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

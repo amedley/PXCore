@@ -1,6 +1,6 @@
 #include "String.h"
 
-namespace sp {
+namespace EngineTest {
 
 	char* StringFormat::s_Buffer = new char[STRINGFORMAT_BUFFER_SIZE];
 

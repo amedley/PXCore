@@ -5,7 +5,7 @@
 
 typedef std::string String;
 
-namespace sp {
+namespace EngineTest {
 
 #define STRINGFORMAT_BUFFER_SIZE 10 * 1024
 
@@ -56,10 +56,10 @@ namespace sp {
 	String StringRange(const String& string, uint start, uint length);
 	String RemoveStringRange(const String& string, uint start, uint length);
 
-	String GetBlock(const char* str, const char** outPosition = nullptr);
+	String GetBlock(const char* str, const char** outPosition = NULL);
 	String GetBlock(const String& string, uint offset = 0);
 
-	String GetStatement(const char* str, const char** outPosition = nullptr);
+	String GetStatement(const char* str, const char** outPosition = NULL);
 
 	bool StringContains(const String& string, const String& chars);
 	bool StartsWith(const String& string, const String& start);

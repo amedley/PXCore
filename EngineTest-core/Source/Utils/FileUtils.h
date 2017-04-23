@@ -4,19 +4,15 @@
 #include "../Common.h"
 #include <fstream>
 
-namespace EngineTest
-{
-	namespace Utils
+namespace EngineTest { namespace Utils {
+	class FileUtils
 	{
-		class FileUtils
-		{
-		public:
-			FileUtils();
-			~FileUtils();
-		public:
-			String ReadFile(const char* filePath);
-		};
-	}
-}
+	public:
+		FileUtils();
+		~FileUtils();
+	public:
+		String ReadFile(const char* filePath);
+	};
+}}
 
 #endif

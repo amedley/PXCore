@@ -1,9 +1,6 @@
 #include "Math.h"
 
-namespace EngineTest
-{
-	namespace Math
-	{
+namespace EngineTest { namespace Math {
 
-	}
-}
+
+}}

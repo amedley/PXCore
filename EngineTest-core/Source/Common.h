@@ -10,5 +10,8 @@
 
 #define METHOD_1(x) std::bind(x, this, std::placeholders::_1)
 #define METHOD(x) METHOD_1(x)
+#define FREE(x) free(x); x = NULL
+#define DELETE(x) delete x; x = NULL
+#define DELETE_ARRAY(x) delete[] x; x = NULL
 
 #endif

@@ -6,10 +6,13 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <thread>
+#include <mutex>
 
 #include <vector>
 #include <list>
 #include <map>
+#include <memory>
 #include <unordered_map>
 
 #include <cstddef>

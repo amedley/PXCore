@@ -3,40 +3,37 @@
 
 #include "../Debug.h"
 
-namespace EngineTest
-{
-	namespace System
+namespace EngineTest { namespace System {
+	enum OS
 	{
-		enum OS
-		{
-			Windows				= 0,
-			MacOS				= 1,
-			Linux				= 2,
-			iOS					= 3,
-			Android				= 4,
-		};
+		kWindows				= 0,
+		kMacOS,
+		kLinux,
+		kIOS,
+		kAndroid,
+	};
 
-		enum GFXAPI
-		{
-			OpenGL				= 0,
-			OpenGLES			= 1
-		};
+	enum GFXAPI
+	{
+		kOpenGL					= 0,
+		kOpenGLES
+	};
 
-		class Machine
-		{
-		public:
-			Machine();
-			~Machine();
+	class Machine
+	{
+	private:
+		OS m_OS;
+		GFXAPI m_GFXAPI;
+	public:
+		Machine();
+		~Machine();
 
-			OS GetOS();
-			GFXAPI GetGFXAPI();
-		private:
-			OS m_OS;
-			GFXAPI m_GFXAPI;
-		};
-
-	}
-}
+		OS GetOS();
+		GFXAPI GetGFXAPI();
+	private:
+		void SetUpMachine();
+	};
+}}
 
 
 
