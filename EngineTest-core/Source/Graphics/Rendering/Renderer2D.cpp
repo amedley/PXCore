@@ -6,12 +6,12 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 
 	Renderer2D::Renderer2D() : Renderer()
 	{
-		m_TransformStackSize = 0;
+		m_TransformStackSize = m_SubmissionCount = 0;
 		m_TransformStackResult = m_TransformStack - 1;
-		m_Vertices = malloc(sizeof(Vertex2D) * MAX_RECTANGLES_PER_DRAW * 4);
-		m_Indices = malloc(sizeof(uint16) * MAX_RECTANGLES_PER_DRAW * 6);
+		m_Vertices = std::vector<Vertex2D>(MAX_SUBMISSIONS * 4);
+		m_Indices = std::vector<uint16>(MAX_SUBMISSIONS * 6);
 
-		uint16* indices = (uint16*) m_Indices;
+		uint16* indices = (uint16*) &m_Indices[0];
 		for (int i = 0; i < MAX_RECTANGLES_PER_DRAW; i++)
 		{
 			int rectVert =	i * 4;
@@ -24,7 +24,7 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 			indices[rectIndex + 5] = rectVert + 2;
 		}
 		m_IndexBuffer->Bind();
-		m_IndexBuffer->BufferData(m_Indices, sizeof(uint16) * MAX_RECTANGLES_PER_DRAW * 6);
+		m_IndexBuffer->BufferData(&m_Indices[0], sizeof(uint16) * MAX_RECTANGLES_PER_DRAW * 6);
 		m_IndexBuffer->Unbind();
 
 		SetShader(Singletons::GetShaderFactory()->GetBasic2D());
@@ -62,14 +62,17 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 
 	void Renderer2D::Begin()
 	{
-		m_VertexBuffer->Bind();
-		GetShader()->EnableVertexAttribs();
+		m_SubmissionCount = 0;
+		m_IndexBuffer->Bind();
+		m_VertexBuffer->Bind(GetShader());
 	}
 	void Renderer2D::Submit(Entity2D* sender, Rect2D* rect, ColorRGBA* colorRGBA)
 	{
+		if (m_SubmissionCount == MAX_SUBMISSIONS)
+			return;
 		Vector4& finalRGBA = colorRGBA->GetRGBAMultiplied();
 
-		Vertex2D* vertexPointer = (Vertex2D*) m_Vertices;
+		Vertex2D* vertexPointer = (Vertex2D*) &m_Vertices[0];
 		vertexPointer += m_SubmissionCount * 4;
 
 		vertexPointer[0] = { rect->m_V0, finalRGBA };
@@ -81,12 +84,19 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 	}
 	void Renderer2D::End()
 	{
-		m_VertexBuffer->BufferData(m_Vertices, sizeof(Vertex2D) * m_SubmissionCount * 4);
 	}
 	void Renderer2D::Draw()
 	{
-		m_IndexBuffer->Bind();
-		glDrawElements(GL_TRIANGLES, m_SubmissionCount * 6, GL_UNSIGNED_SHORT, NULL);
-		m_SubmissionCount = 0;
+		uint32 submissionIndex = 0;
+		m_VertexBuffer->BufferData(&m_Vertices[0], sizeof(Vertex2D) * m_SubmissionCount * 4);
+		while (submissionIndex < m_SubmissionCount)
+		{
+			Draw(submissionIndex, Min(m_SubmissionCount - submissionIndex, MAX_RECTANGLES_PER_DRAW));
+			submissionIndex += MAX_RECTANGLES_PER_DRAW;
+		}
+	}
+	void Renderer2D::Draw(int32 submissionIndex, int32 submissionCount)
+	{
+		glDrawElements(GL_TRIANGLES, submissionCount * 6, GL_UNSIGNED_SHORT, NULL);
 	}
 }}}

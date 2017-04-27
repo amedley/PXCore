@@ -3,9 +3,12 @@
 
 #include "GL/glew.h"
 #include "../../Common.h"
+#include "../Shaders/Shader.h"
 
 namespace EngineTest { namespace Graphics { namespace Rendering {
 	
+	using namespace Shaders;
+
 	class VertexBuffer
 	{
 		static VertexBuffer* s_BoundVertexBuffer;
@@ -14,6 +17,7 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 		~VertexBuffer();
 
 		void Bind();
+		void Bind(Shader* shader);
 		void BufferData(void* data, uint32 size);
 		void Unbind();
 

@@ -24,13 +24,13 @@ namespace EngineTest { namespace Graphics {
 
 		if (!glfwInit())
 		{
-			Assert(false, "Failed to initialize GLFEW!");
+			ASSERT(false, "Failed to initialize GLFEW!");
 			return;
 		}
 		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
 		if (!m_Window)
 		{
-			Assert(false, "There was a problem with glfwCreateWindow!");
+			ASSERT(false, "There was a problem with glfwCreateWindow!");
 			glfwTerminate();
 			return;
 		}
@@ -45,7 +45,7 @@ namespace EngineTest { namespace Graphics {
 
 		if (glewInit() != GLEW_OK)
 		{
-			Assert(false, "Could not initialize GLEW!");
+			ASSERT(false, "Could not initialize GLEW!");
 			glfwTerminate();
 			return;
 		}

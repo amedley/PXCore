@@ -16,12 +16,20 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 
 	void VertexBuffer::Bind()
 	{
+		Bind(NULL);
+	}
+	void VertexBuffer::Bind(Shader* shader)
+	{
 		if (GetBound())
 			return;
 		if (s_BoundVertexBuffer)
 			s_BoundVertexBuffer->Unbind();
 		glBindBuffer(GL_ARRAY_BUFFER, m_ID);
 		s_BoundVertexBuffer = this;
+		if (shader)
+		{
+			shader->EnableVertexAttribs();
+		}
 	}
 	void VertexBuffer::BufferData(void* data, uint32 size)
 	{

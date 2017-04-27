@@ -12,8 +12,6 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 	{
 		DELETE(m_VertexBuffer);
 		DELETE(m_IndexBuffer);
-		FREE(m_Vertices);
-		FREE(m_Indices);
 	}
 
 	void Renderer::SetShader(Shader* shader)

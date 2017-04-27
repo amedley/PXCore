@@ -1,13 +1,7 @@
 #include "Game.h"
 #include "Singletons.h"
-#include "Utils/Time.h"
-#include "Utils/ThreadUtils.h"
 
-namespace EngineTest
-{
-	using namespace Graphics;
-	using namespace Math;
-	using namespace Utils;
+namespace EngineTest {
 
 	Game::Game()
 	{
@@ -15,28 +9,30 @@ namespace EngineTest
 	void Game::Init()
 	{
 		Window* window = Singletons::GetWindow();
+		m_Width = (float)window->GetWidth();
+		m_Height = (float)window->GetHeight();
 
-		Entity2D* entity0 = new Entity2D(Vector3(0.0f, 0.0f, 0.0f), Vector2(64.0f, 64.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-		entity0->GetTransform().ChangePosition(Vector3(100.0f, 200.0f, 0.0f));
-		entity0->GetTransform().ChangeRotation(22.5f);
-
-		Entity2D* entity1 = new Entity2D(Vector3(0.0f, 0.0f, 0.0f), Vector2(64.0f, 64.0f), Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-		entity1->GetTransform().ChangePosition(Vector3(-100.0f, 200.0f, 0.0f));
-		entity1->GetTransform().ChangeRotation(77.5f);
-
-		Group2D* group0 = new Group2D();
-		group0->AddChild(*entity0);
-		group0->AddChild(*entity1);
-
-		group0->GetTransform().ChangePosition(Vector3(200.0f, 0.0f, 0.0f));
-		group0->GetTransform().ChangeRotation(45.0f);
+		m_Group2D = new Group2D();
 
 		m_Layer2D = new Layer2D(Matrix4::Orthographic(-window->GetWidth() / 2.0, window->GetWidth() / 2.0, -window->GetHeight() / 2.0, window->GetHeight() / 2.0, 0.0, 5000.0));
-		m_Layer2D->AddChild(*group0);
+
+		m_Random = new Random(0);
+
+		for (int i = 0; i < 200000; i++)
+		{
+			Entity2D* entity = new Entity2D();
+			entity->GetTransform().SetPosition(Vector3(m_Width * (m_Random->NextF() - 0.5f), m_Height * (m_Random->NextF() - 0.5f), 0.0f));
+			entity->GetTransform().ChangeRotation(m_Random->NextF() * 360.0f);
+			entity->GetTransform().SetSize(Vector2(2.0f, 2.0f));
+			entity->GetColor().m_RGBA = Vector4(m_Random->NextF(), m_Random->NextF(), m_Random->NextF(), 1.0f);
+			m_Group2D->AddChild(*entity);
+		}
+
+
+		m_Layer2D->AddChild(*m_Group2D);
 
 		m_Ticks = 0;
 		m_TimeSpent = 0.0;
-
 
 		double time0 = TimeSinceEpoch();
 		while (!Singletons::GetWindow()->IsClosed())
@@ -59,6 +55,7 @@ namespace EngineTest
 			{
 			LOG("%llu, %f", m_Ticks, (TimeSinceEpoch() - time0) * 60.0);
 			}*/
+
 			m_TimeSpent = TimeSinceEpoch() - time0;
 		}
 	}

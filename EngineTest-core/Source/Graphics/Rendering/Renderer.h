@@ -5,10 +5,12 @@
 #include "../Shaders/Shader.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "../../Math/Math.h"
 
 namespace EngineTest { namespace Graphics { namespace Rendering {
 
 	using namespace Shaders;
+	using namespace Math;
 
 	class Renderer
 	{
@@ -17,8 +19,6 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 	protected:
 		VertexBuffer* m_VertexBuffer;
 		IndexBuffer* m_IndexBuffer;
-		void* m_Vertices;
-		void* m_Indices;
 	public:
 		Renderer();
 		virtual ~Renderer();

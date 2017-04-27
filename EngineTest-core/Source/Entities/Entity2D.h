@@ -43,6 +43,7 @@ namespace EngineTest { namespace Entities {
 		void AddChild(Entity2D& entity);
 		void RemoveChild(Entity2D& entity);
 		Entity2D& GetParent();
+		const std::vector<Entity2D*>& GetChildEntities();
 
 		// Property getters
 		EntityState2D GetEntityState();

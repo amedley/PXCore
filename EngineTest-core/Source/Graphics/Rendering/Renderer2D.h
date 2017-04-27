@@ -8,7 +8,8 @@
 namespace EngineTest { namespace Graphics { namespace Rendering {
 
 #define TRANSFORM_2D_STACK_SIZE 64
-#define MAX_RECTANGLES_PER_DRAW 1024
+#define MAX_RECTANGLES_PER_DRAW 100000
+#define MAX_SUBMISSIONS 200000
 
 	using namespace Entities;
 
@@ -19,6 +20,8 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 		Matrix4 m_TransformStack[TRANSFORM_2D_STACK_SIZE];
 		Matrix4* m_TransformStackResult;
 		uint32 m_SubmissionCount;
+		std::vector<Vertex2D> m_Vertices;
+		std::vector<uint16> m_Indices;
 
 	public:
 		Renderer2D();
@@ -33,6 +36,7 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 		void Submit(Entity2D* sender, Rect2D* rect, ColorRGBA* colorRGBA);
 		void End();
 		void Draw();
+		void Draw(int32 submissionIndex, int32 submissionCount);
 	};
 
 }}}

@@ -157,6 +157,7 @@
     <ClCompile Include="Source\String.cpp" />
     <ClCompile Include="Source\System\Machine.cpp" />
     <ClCompile Include="Source\Utils\FileUtils.cpp" />
+    <ClCompile Include="Source\Utils\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Common.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Source\String.h" />
     <ClInclude Include="Source\System\Machine.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
+    <ClInclude Include="Source\Utils\Random.h" />
     <ClInclude Include="Source\Utils\ThreadUtils.h" />
     <ClInclude Include="Source\Utils\Time.h" />
   </ItemGroup>

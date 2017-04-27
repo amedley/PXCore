@@ -58,6 +58,7 @@ namespace EngineTest { namespace Entities {
 	{
 		if (!m_Transform->GetMatrixSynced())
 			m_Transform->CalculateModel();
+		m_ColorRGBA->CalculateRGBAMultiplied();
 		bool shouldRender = GetShouldRender();
 		if (shouldRender)
 		{
@@ -165,6 +166,10 @@ namespace EngineTest { namespace Entities {
 	Entity2D& Entity2D::GetParent()
 	{
 		return *m_Parent;
+	}
+	const std::vector<Entity2D*>& Entity2D::GetChildEntities()
+	{
+		return m_ChildEntities;
 	}
 
 	// Property getters

@@ -10,6 +10,7 @@
 #include <mutex>
 
 #include <vector>
+#include <unordered_set>
 #include <list>
 #include <map>
 #include <memory>
