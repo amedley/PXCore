@@ -8,8 +8,8 @@
 namespace EngineTest { namespace Graphics { namespace Rendering {
 
 #define TRANSFORM_2D_STACK_SIZE 64
-#define MAX_RECTANGLES_PER_DRAW 100000
-#define MAX_SUBMISSIONS 200000
+#define MAX_RECTANGLES_PER_DRAW 4096
+#define MAX_SUBMISSIONS 65536
 
 	using namespace Entities;
 

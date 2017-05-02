@@ -18,16 +18,15 @@ namespace EngineTest {
 
 		m_Random = new Random(0);
 
-		for (int i = 0; i < 200000; i++)
+		for (int i = 0; i < 5000; i++)
 		{
 			Entity2D* entity = new Entity2D();
-			entity->GetTransform().SetPosition(Vector3(m_Width * (m_Random->NextF() - 0.5f), m_Height * (m_Random->NextF() - 0.5f), 0.0f));
+			entity->GetTransform().SetPosition(Vector3(m_Width * (m_Random->NextF() - 0.5f) * 0.8f, m_Height * (m_Random->NextF() - 0.5f) * 0.8f, 0.0f));
 			entity->GetTransform().ChangeRotation(m_Random->NextF() * 360.0f);
-			entity->GetTransform().SetSize(Vector2(2.0f, 2.0f));
+			entity->GetTransform().SetSize(Vector2(16.0f, 16.0f));
 			entity->GetColor().m_RGBA = Vector4(m_Random->NextF(), m_Random->NextF(), m_Random->NextF(), 1.0f);
 			m_Group2D->AddChild(*entity);
 		}
-
 
 		m_Layer2D->AddChild(*m_Group2D);
 
@@ -37,6 +36,7 @@ namespace EngineTest {
 		double time0 = TimeSinceEpoch();
 		while (!Singletons::GetWindow()->IsClosed())
 		{
+			double timeBefore = TimeSinceEpoch();
 			if ((double)m_Ticks > m_TimeSpent * 60.0)
 			{
 				std::this_thread::sleep_for(std::chrono::nanoseconds((int)((m_Ticks - m_TimeSpent * 60.0) / 60.0 * 1000000000.0)));
@@ -51,10 +51,13 @@ namespace EngineTest {
 			}
 			OnUpdate();
 			OnRender();
-			/*if (m_Ticks % 60 == 0)
+
+			LOG("%f", 0.0166667 / (TimeSinceEpoch() - timeBefore) * 60.0);
+			if (m_Ticks % 60 == 0)
 			{
-			LOG("%llu, %f", m_Ticks, (TimeSinceEpoch() - time0) * 60.0);
-			}*/
+			//LOG("%llu, %f", m_Ticks, (TimeSinceEpoch() - time0) * 60.0);
+			}
+
 
 			m_TimeSpent = TimeSinceEpoch() - time0;
 		}

@@ -9,7 +9,7 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 		m_TransformStackSize = m_SubmissionCount = 0;
 		m_TransformStackResult = m_TransformStack - 1;
 		m_Vertices = std::vector<Vertex2D>(MAX_SUBMISSIONS * 4);
-		m_Indices = std::vector<uint16>(MAX_SUBMISSIONS * 6);
+		m_Indices = std::vector<uint16>(MAX_RECTANGLES_PER_DRAW * 6);
 
 		uint16* indices = (uint16*) &m_Indices[0];
 		for (int i = 0; i < MAX_RECTANGLES_PER_DRAW; i++)
@@ -63,8 +63,8 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 	void Renderer2D::Begin()
 	{
 		m_SubmissionCount = 0;
-		m_IndexBuffer->Bind();
 		m_VertexBuffer->Bind(GetShader());
+		m_IndexBuffer->Bind();
 	}
 	void Renderer2D::Submit(Entity2D* sender, Rect2D* rect, ColorRGBA* colorRGBA)
 	{
@@ -88,7 +88,6 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 	void Renderer2D::Draw()
 	{
 		uint32 submissionIndex = 0;
-		m_VertexBuffer->BufferData(&m_Vertices[0], sizeof(Vertex2D) * m_SubmissionCount * 4);
 		while (submissionIndex < m_SubmissionCount)
 		{
 			Draw(submissionIndex, Min(m_SubmissionCount - submissionIndex, MAX_RECTANGLES_PER_DRAW));
@@ -97,6 +96,7 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 	}
 	void Renderer2D::Draw(int32 submissionIndex, int32 submissionCount)
 	{
+		m_VertexBuffer->BufferData(&m_Vertices[submissionIndex * 4], sizeof(Vertex2D) * submissionCount * 4);
 		glDrawElements(GL_TRIANGLES, submissionCount * 6, GL_UNSIGNED_SHORT, NULL);
 	}
 }}}

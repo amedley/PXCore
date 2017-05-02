@@ -34,7 +34,7 @@ namespace EngineTest { namespace Graphics { namespace Rendering {
 	void VertexBuffer::BufferData(void* data, uint32 size)
 	{
 		Bind();
-		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
 	}
 	void VertexBuffer::Unbind()
 	{
