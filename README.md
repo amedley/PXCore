@@ -1,3 +1,3 @@
-# EngineTest
-Testing a multiplatform game engine written in C/C++
-I plan to get this engine to a point where I am comfortable with C/C++ and have it running on my desired platforms (iOS, Android, Windows, Mac, Linux). After I get there, I intend to take what I've learned and apply it to a more documented, better optimized version of this. EngineTest is a temporary project but when I'm finished I may revisit it to fix bugs and it will stay open source.
+# PXCore
+Creating a multiplatform game engine written in C/C++, originally inspried by the game engine I wrote in Objective C to run the first available version of Super Plexis on the App Store.
+Desired platforms are iOS, Android, Windows, MacOS, and Linux. Until this project becomes more important to the public scope, I won't be working on it all of the time. Currently (10-30-2017) this is more of a side project than anything, so even the documentation is lacking.
